@@ -1,0 +1,43 @@
+// Custom layout "bruno" — Brazilian-Portuguese-oriented accent layout,
+// meant to feel identical on any keyboard (ABNT2 laptop or plain US/ANSI
+// external), by muscle memory, regardless of what's printed on the keycaps.
+//
+// Settled design after live testing (reverted an attempt to move the
+// accent key to the top-left corner — muscle memory said no):
+//
+//   ` (TLDE, top-left key)   -> literal apostrophe / quotedbl (' ")
+//   [ (AD11, left-bracket)   -> dead_acute (base: á é í ó ú) / dead_grave
+//                               (shift: à — crase) — the main accent key.
+//                               AltGr recovers the ']' '}' this key would
+//                               otherwise lose (bracket-close, where you
+//                               already expect it: AltGr+[ / AltGr+Shift+[)
+//   ] (AD12, right-bracket)  -> literal bracketleft/braceleft ('[' '{' —
+//                               moved here since AD11 is busy with accents).
+//                               AltGr also gives bracket-close here too.
+//   ~^ (AC11, next to Enter) -> dead_tilde (base: ã õ) / dead_circumflex
+//                               (shift: â ê ô) — same as stock ABNT2.
+//                               AltGr ALSO gives bracket-close (redundant
+//                               with AD11/AD12's AltGr, on purpose — still
+//                               deciding which spot feels best long-term)
+//   6 (AE06)                 -> dead_circumflex on shift (matches keycap)
+//   AltGr+a / AltGr+c        -> agrave/Agrave, ccedilla/Ccedilla direct
+//                               shortcuts (from the original .klc)
+//
+// Not ported (minor, add later via ~/.XCompose if wanted):
+//   - dead_acute+c / dead_tilde+c producing ç directly (bonus in the .klc)
+
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "us(basic)"
+    name[Group1] = "Bruno (US custom)";
+
+    key <TLDE> { [ apostrophe,  quotedbl,        grave,        asciitilde ] };
+    key <AE06> { [ 6,           dead_circumflex, onequarter,   asciicircum ] };
+    key <AD11> { [ dead_acute,  dead_grave,      bracketright, braceright ] };
+    key <AD12> { [ bracketleft, braceleft,       bracketright, braceright ] };
+    key <AC11> { [ dead_tilde,  dead_circumflex, bracketright, braceright ] };
+    key <AC01> { [ a,           A,               agrave,       Agrave ] };
+    key <AB03> { [ c,           C,               ccedilla,     Ccedilla ] };
+
+    include "level3(ralt_switch)"
+};
